@@ -1,0 +1,112 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "Name": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SiteUrl": {
+            "defaultvalue": "",
+            "type": "string"
+        },
+        "ListId": {
+            "defaultvalue": "",
+            "type": "string"
+        },
+        "ListViewId": {
+            "defaultvalue": "",
+            "type": "string"
+        },
+        "SPOConnectionName": {
+            "defaultvalue": "",
+            "type": "string"
+        },
+        "QueuesConnectionName": {
+            "defaultvalue": "",
+            "type": "string"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('Name')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "When_an_item_is_created_or_modified": {
+                            "recurrence": {
+                                "frequency": "Minute",
+                                "interval": 3
+                            },
+                            "splitOn": "@triggerBody()?['value']",
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['sharepointonline']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('SiteUrl'), '''))}/tables/@{encodeURIComponent(encodeURIComponent(''', parameters('ListId'), '''))}/onupdateditems')]",
+                                "queries": {
+                                    "view": "[parameters('ListViewId')]"
+                                }
+                            },
+                            "conditions": [
+                                {
+                                    "expression": "@equals(triggerBody()?['Status']?['Value'],'Approved')"
+                                }
+                            ]
+                        }
+                    },
+                    "actions": {
+                        "Put_a_message_on_a_queue": {
+                            "runAfter": {},
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "body": "{\n\"ItemId\": @{triggerBody()?['ID']}\n}",
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azurequeues']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/@{encodeURIComponent('provisioning-queue')}/messages"
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "azurequeues": {
+                                "connectionId": "[concat('/subscriptions/', subscription().subscriptionId ,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/connections/',parameters('QueuesConnectionName'))]",
+                                "connectionName": "[parameters('QueuesConnectionName')]",
+                                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/azurequeues')]"
+                            },
+                            "sharepointonline": {
+                                "connectionId": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/connections/',parameters('SPOConnectionName'))]",
+                                "connectionName": "[parameters('SPOConnectionName')]",
+                                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/sharepointonline')]"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

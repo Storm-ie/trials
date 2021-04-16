@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2020/02/ProvisioningSchema" Version="0.1" Author="Storm Ltd.">
+  <pnp:Preferences Generator="OfficeDevPnP.Core, Version=2.4.1605.0, Culture=neutral, PublicKeyToken=null">
+    <pnp:Parameters>
+      <pnp:Parameter Key="ServiceAccountLoginName"/>
+      <pnp:Parameter Key="AuthenticationRealm"/>
+    </pnp:Parameters>
+  </pnp:Preferences>
+  <pnp:Templates>
+    <pnp:ProvisioningTemplate ID="Provisioning.Main.Teams.Security">
+      <pnp:Security AssociatedOwnerGroup="{groupsitetitle} Owners" AssociatedMemberGroup="{groupsitetitle} Members" AssociatedVisitorGroup="{groupsitetitle} Visitors">
+        <pnp:AdditionalVisitors>
+          <pnp:User Name="c:0-.f|rolemanager|spo-grid-all-users/{parameter:AuthenticationRealm}" />
+        </pnp:AdditionalVisitors>
+        <pnp:Permissions />
+      </pnp:Security>
+    </pnp:ProvisioningTemplate>
+  </pnp:Templates>
+</pnp:Provisioning>

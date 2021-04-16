@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2020/02/ProvisioningSchema" Version="0.1" Author="Storm Ltd.">
+  <pnp:Templates>
+    <pnp:ProvisioningTemplate ID="Provisioning.Main.Teams.Fields">
+      <pnp:SiteFields>
+        <!-- New fields from Ardagh template, using a new provisioning solution -->
+        <Field Type="Note" DisplayName="Workspace Description" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" NumLines="6" RichText="FALSE" Sortable="FALSE" ID="{606c46c9-4413-499f-8db7-b128d1751132}" SourceID="{{siteid}}" StaticName="WorkspaceDescription" Name="WorkspaceDescription" Group="Governance App" RestrictedMode="TRUE" RichTextMode="Compatible" AppendOnly="FALSE" />
+        <Field Type="Note" DisplayName="Business Justification" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" NumLines="6" RichText="FALSE" Sortable="FALSE" ID="{fb878f25-ec89-4b01-b6c9-eb9d78515195}" SourceID="{{siteid}}" StaticName="BusinessJustification" Name="BusinessJustification" Group="Governance App" RestrictedMode="TRUE" RichTextMode="Compatible" AppendOnly="FALSE" />
+        <Field Type="UserMulti" DisplayName="Owners" List="UserInfo" Required="FALSE" EnforceUniqueValues="FALSE" ShowField="ImnName" UserSelectionMode="PeopleOnly" UserSelectionScope="0" ID="{63f7afc1-92f8-4fdb-95f6-7162f0e67913}" SourceID="{{siteid}}" StaticName="Owners" Name="Owners" Group="Governance App" Mult="TRUE" Sortable="FALSE" />
+        <Field Type="UserMulti" DisplayName="Members" List="UserInfo" Required="FALSE" EnforceUniqueValues="FALSE" ShowField="ImnName" UserSelectionMode="PeopleOnly" UserSelectionScope="0" ID="{f8953ad8-fd84-4a8b-bba0-f9bf056dc147}" SourceID="{{siteid}}" StaticName="Members" Name="Members" Group="Governance App" Mult="TRUE" Sortable="FALSE" />
+        <Field Type="Choice" DisplayName="Visibility" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" Format="Dropdown" FillInChoice="FALSE" ID="{1c4a85a0-4ef1-466e-95e0-de21ee110990}" SourceID="{{siteid}}" StaticName="Visibility" Name="Visibility" Group="Governance App">
+          <Default>Private</Default>
+          <CHOICES>
+            <CHOICE>Private</CHOICE>
+            <CHOICE>Public</CHOICE>
+          </CHOICES>
+        </Field>
+        <Field Type="Choice" DisplayName="Status" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" Format="Dropdown" FillInChoice="FALSE" ID="{73ca1a39-406a-48c2-ae8c-850451793480}" SourceID="{{siteid}}" StaticName="Status" Name="Status" Group="Governance App">
+          <Default>Not Submitted</Default>
+          <CHOICES>
+            <CHOICE>Not Submitted</CHOICE>
+            <CHOICE>Submitted</CHOICE>
+            <CHOICE>Pending Approval</CHOICE>
+            <CHOICE>Approved</CHOICE>
+            <CHOICE>Rejected</CHOICE>
+            <CHOICE>Creation</CHOICE>
+            <CHOICE>Created</CHOICE>
+            <CHOICE>Creation Failed</CHOICE>
+            <CHOICE>Provisioned</CHOICE>
+            <CHOICE>Provisioned Failed</CHOICE>
+            <CHOICE>Archived</CHOICE>
+          </CHOICES>
+        </Field>
+        <Field Type="Text" DisplayName="Workspace Alias" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" MaxLength="255" ID="{48862393-00f0-4fcf-bfb4-f14854bade69}" SourceID="{{siteid}}" StaticName="WorkspaceAlias" Name="WorkspaceAlias" Group="Governance App"/>
+        <Field Type="Boolean" DisplayName="Is a template" ID="{77404100-7f20-4609-a1f1-e5d06d4f2303}" Name="IsaTemplate" StaticName="IsaTemplate" Group="Governance App" EnforceUniqueValues="FALSE" Indexed="TRUE" />
+        <Field Type="Choice" DisplayName="Workspace Type" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" Format="Dropdown" FillInChoice="FALSE" ID="{e7df5896-f84f-4c20-ae4d-c3dfc0588696}" SourceID="{{siteid}}" StaticName="WorkspaceType" Name="WorkspaceType" Group="Governance App">
+          <Default>Site</Default>
+          <CHOICES>
+            <CHOICE>Site</CHOICE>
+            <CHOICE>Team</CHOICE>
+          </CHOICES>
+        </Field>
+        <Field Type="Note" DisplayName="Comments" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" NumLines="6" RichText="FALSE" Sortable="FALSE" ID="{260f7057-a614-43e5-875e-ce459d7220a7}" SourceID="{{siteid}}" StaticName="RequestComments" Name="RequestComments" Group="Governance App"/>
+        <Field Type="Text" DisplayName="Team URL" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" MaxLength="255" ID="{a103925f-2646-49d0-ac53-e9ac312d26e1}" SourceID="{{siteid}}" StaticName="TeamURL" Name="TeamURL" Group="Governance App"/>
+        <Field Type="Text" DisplayName="Template name and extension" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" MaxLength="255" ID="{09aedcb8-8bc2-4d72-b399-561da6308fd4}" SourceID="{{siteid}}" StaticName="TemplateName" Name="TemplateName" Group="Governance App"/>
+        <Field Type="DateTime" DisplayName="Approved Date" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" Format="DateTime" FriendlyDisplayFormat="Disabled" ID="{6c672905-2e02-469a-9cd5-30f54628478f}" SourceID="{{siteid}}" StaticName="ApprovedDate" Name="ApprovedDate" Group="Governance App"/>
+        <Field Type="Text" DisplayName="SharePoint Site URL" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" MaxLength="255" ID="{a32fd64a-9e3f-4ad6-8f8e-b55456d5f7bf}" SourceID="{{siteid}}" StaticName="SharePointSiteURL" Name="SharePointSiteURL" Group="Governance App"/>
+        <Field Type="MultiChoice" DisplayName="Additional features" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" FillInChoice="FALSE" ID="{6d7657f9-649e-428d-9df1-751265d463fa}" SourceID="{{siteid}}" StaticName="AdditionalFeatures" Name="AdditionalFeatures" Group="Governance App">
+          <CHOICES>
+            <CHOICE>Disable external sharing</CHOICE>
+          </CHOICES>
+        </Field>
+        <Field Type="Boolean" DisplayName="Enable site scripts" ID="{5047ef26-12f9-46cd-8110-99007ed378e5}" Name="EnableSiteScripts" StaticName="EnableSiteScripts" Group="Governance App" EnforceUniqueValues="FALSE" Indexed="TRUE" />
+        <Field Type="Note" DisplayName="External users" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" NumLines="6" RichText="FALSE" Sortable="FALSE" ID="{baf7c1ac-47ee-4162-b34a-e586b42675f6}" SourceID="{{siteid}}" StaticName="ExternalUsers" Name="ExternalUsers" Group="Governance App"/>
+        <Field Type="Note" DisplayName="Additional Template Parameters" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" NumLines="6" RichText="FALSE" Sortable="FALSE" ID="{0aa2541c-9601-43dd-a725-c70e3e04c66d}" SourceID="{{siteid}}" StaticName="AdditionalTemplateParameters" Name="AdditionalTemplateParameters" Group="Governance App"/>
+        <Field Type="User" DisplayName="Approved/Rejected By" List="UserInfo" Required="FALSE" EnforceUniqueValues="FALSE" ShowField="ImnName" UserSelectionMode="PeopleOnly" UserSelectionScope="0" ID="{e7a89cb6-a2e9-49f4-a23a-0731aa752bf4}" SourceID="{{siteid}}" StaticName="ApprovedRejectedBy" Name="ApprovedRejectedBy" Group="Governance App" Mult="FALSE" Sortable="FALSE" AllowDeletion="TRUE"/>
+
+        <!-- Old fields from Ardagh template -->
+        <!-- Do not remove before check if Governance App solution is using there -->
+        <Field Type="Note" DisplayName="Description" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" NumLines="6" RichText="FALSE" Sortable="FALSE" ID="{606c46c9-4413-499f-8db7-b128d1751133}" SourceID="{{siteid}}" StaticName="SettingDescription" Name="SettingDescription" Group="Governance App" RestrictedMode="TRUE" RichTextMode="Compatible" AppendOnly="FALSE" />
+        <Field Type="Note" DisplayName="Value" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" NumLines="6" RichText="FALSE" Sortable="FALSE" ID="{606c46c9-4413-499f-8db7-b128d1751134}" SourceID="{{siteid}}" StaticName="SettingValue" Name="SettingValue" Group="Governance App" RestrictedMode="TRUE" RichTextMode="Compatible" AppendOnly="FALSE" />
+        <Field Type="Note" DisplayName="Team Purpose and Content" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" NumLines="6" RichText="FALSE" Sortable="FALSE" ID="{e4c7a4e8-8187-4ffb-b892-b320a23d603d}" SourceID="{{siteid}}" StaticName="TeamPurpose" Name="TeamPurpose" Group="Governance App" RestrictedMode="TRUE" RichTextMode="Compatible" AppendOnly="FALSE" />
+        <Field Type="Boolean" DisplayName="Confidential Data" EnforceUniqueValues="FALSE" Indexed="FALSE" ID="{877a66d6-69dc-43ff-ab7a-40af815fe91a}" SourceID="{{siteid}}" StaticName="ConfidentialData" Name="ConfidentialData" Group="Governance App" Required="FALSE">
+          <Default>0</Default>
+        </Field>
+        <Field Type="Text" DisplayName="Template Id" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" MaxLength="255" ID="{20ad71bf-b579-40b8-a4ec-9f92ea22e443}" SourceID="{{siteid}}" StaticName="_TemplateId" Name="_TemplateId" Group="Governance App"/>
+        <Field Type="Choice" DisplayName="Stage" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" Format="Dropdown" FillInChoice="FALSE" ID="{0f7271ca-c566-47f9-9c10-c1163f70255d}" SourceID="{{siteid}}" StaticName="Stage" Name="Stage" Group="Governance App">
+          <Default>Team Information</Default>
+          <CHOICES>
+            <CHOICE>Team Information</CHOICE>
+            <CHOICE>Requirements</CHOICE>
+            <CHOICE>Data Classification</CHOICE>
+            <CHOICE>Template</CHOICE>
+            <CHOICE>Submitted</CHOICE>
+          </CHOICES>
+        </Field>
+        <Field Type="Text" DisplayName="Status Reason" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" MaxLength="255" ID="{5093f25d-7bd3-4d1b-8a1a-6c0774a00e02}" SourceID="{{siteid}}" StaticName="StatusReason" Name="StatusReason" Group="Governance App"/>
+        <Field Type="Boolean" DisplayName="First Party Template" EnforceUniqueValues="FALSE" Indexed="FALSE" ID="{9a64a440-3b6b-480c-ba7a-ad0e087054bd}" SourceID="{{siteid}}" StaticName="FirstPartyTemplate" Name="FirstPartyTemplate" Required="FALSE" Group="Governance App">
+          <Default>0</Default>
+        </Field>
+      </pnp:SiteFields>
+    </pnp:ProvisioningTemplate>
+  </pnp:Templates>
+</pnp:Provisioning>

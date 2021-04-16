@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2020/02/ProvisioningSchema">
+  <pnp:Templates>
+    <pnp:ProvisioningTemplate ID="Provisioning.Main.Teams.Pages">
+      <pnp:ClientSidePages>
+        <pnp:ClientSidePage PromoteAsNewsArticle="false" PromoteAsTemplate="false" Overwrite="true" Layout="Home" EnableComments="false" Title="Home" ThumbnailUrl="" PageName="Home.aspx">
+          <pnp:Header Type="Default" LayoutType="FullWidthImage" TextAlignment="Center" ShowTopicHeader="false" ShowPublishDate="false" TopicHeader="" AlternativeText="" Authors="" AuthorByLineId="-1" />
+          <pnp:Sections>
+            <pnp:Section Order="1" Type="OneColumn">
+              <pnp:Controls>
+                <pnp:CanvasControl WebPartType="Custom" JsonControlData="{&quot;id&quot;: &quot;f198484d-de9b-4758-bc51-a9cbac390939&quot;, &quot;instanceId&quot;: &quot;d03cf35e-b9ec-4a5c-82d8-e7084ef50a47&quot;, &quot;title&quot;: &quot;Connect Workspaces&quot;, &quot;description&quot;: &quot;Provisioning description&quot;, &quot;dataVersion&quot;: &quot;1.0&quot;, &quot;properties&quot;: {&quot;listId&quot;:&quot;{listid:Provisioning Requests}&quot;,&quot;listCustomPropertiesId&quot;:&quot;{listid:Provisioning Custom Properties}&quot;,&quot;webUrl&quot;:&quot;https://{fqdn}{site}&quot;,&quot;groupId&quot;:&quot;81cca0a5-46ee-40f2-a261-fdf2d7511ccd&quot;,&quot;defaultViewId&quot;:0,&quot;defaultManageViewId&quot;:0,&quot;currentUser&quot;:{&quot;email&quot;:&quot;user@contoso.onmicrosoft.com&quot;,&quot;o365LoginName&quot;:&quot;i:0#.f|membership|user@contoso.onmicrosoft.com&quot;,&quot;id&quot;:6}}, &quot;serverProcessedContent&quot;: {&quot;htmlStrings&quot;:{},&quot;searchablePlainTexts&quot;:{},&quot;imageSources&quot;:{},&quot;links&quot;:{}}, &quot;dynamicDataPaths&quot;: {}, &quot;dynamicDataValues&quot;: {}}" ControlId="f198484d-de9b-4758-bc51-a9cbac390939" Order="1" Column="1" />
+              </pnp:Controls>
+            </pnp:Section>
+          </pnp:Sections>
+        </pnp:ClientSidePage>
+      </pnp:ClientSidePages>
+    </pnp:ProvisioningTemplate>
+  </pnp:Templates>
+</pnp:Provisioning>

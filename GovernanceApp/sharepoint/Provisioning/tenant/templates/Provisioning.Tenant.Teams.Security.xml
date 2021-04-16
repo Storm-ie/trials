@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2019/09/ProvisioningSchema">
+  <pnp:Preferences Generator="OfficeDevPnP.Core, Version=2.4.1605.0, Culture=neutral, PublicKeyToken=null">
+    <pnp:Parameters>
+        <pnp:Parameter Key="ServiceAccountLoginName"/>
+      </pnp:Parameters>
+  </pnp:Preferences>
+  <pnp:Templates>
+    <pnp:ProvisioningTemplate ID="Provisioning.Tenant.Teams.Security" Version="1">
+      <pnp:Security>
+        <pnp:AdditionalOwners>
+          <pnp:User Name="{parameter:ServiceAccountLoginName}" />
+        </pnp:AdditionalOwners>
+      </pnp:Security>
+    </pnp:ProvisioningTemplate>
+  </pnp:Templates>
+</pnp:Provisioning>
+

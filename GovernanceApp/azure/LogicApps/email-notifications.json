@@ -1,0 +1,168 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "Name": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SiteUrl": {
+            "defaultvalue": "",
+            "type": "string"
+        },
+        "ListId": {
+            "defaultvalue": "",
+            "type": "string"
+        },
+        "ListViewId": {
+            "defaultvalue": "",
+            "type": "string"
+        },
+        "SPOConnectionName": {
+            "defaultvalue": "",
+            "type": "string"
+        },
+        "OutlookConnectionName": {
+            "defaultvalue": "",
+            "type": "string"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('Name')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "When_an_item_is_created_or_modified": {
+                            "recurrence": {
+                                "frequency": "Minute",
+                                "interval": 3
+                            },
+                            "splitOn": "@triggerBody()?['value']",
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['sharepointonline']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('SiteUrl'), '''))}/tables/@{encodeURIComponent(encodeURIComponent(''', parameters('ListId'), '''))}/onupdateditems')]",
+                                "queries": {
+                                    "view": "[parameters('ListViewId')]"
+                                }
+                            },
+                            "conditions": [
+                                {
+                                    "expression": "@equals(triggerBody()?['Status']?['Value'],'Provisioned')"
+                                }
+                            ]
+                        }
+                    },
+                    "actions": {
+                        "Initialize_variable_EmailTo": {
+                            "runAfter": {},
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "EmailTo",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "For_each_owner": {
+                            "foreach": "@triggerBody()?['Owners']",
+                            "actions": {
+                                "Append_to_string_variable_EmailTo": {
+                                    "runAfter": {},
+                                    "type": "AppendToStringVariable",
+                                    "inputs": {
+                                        "name": "EmailTo",
+                                        "value": "@{items('For_each_owner')?['Email']};"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Initialize_variable_EmailTo": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Foreach"
+                        },
+                        "Initialize_variable_EmailBodyHTML": {
+                            "runAfter": {
+                                "For_each_owner": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "EmailBodyHTML",
+                                        "type": "string",
+                                        "value": "HTML Hi,\n<br/>\n<br/>\nA new project workspace was created witht the following details:\n<br/>\n<br/>\nTitle: @{triggerBody()?['Title']}\n<br/>\nSite Url: <a href='@{triggerBody()?['SharePointSiteURL']}'>Open site</a>\n<br/>\nTeam Url: <a href='@{triggerBody()?['TeamURL']}'>Open team</a>\n<br/>\nMailbox: @{triggerBody()?['WorkspaceAlias']}\n<br/>\n<br/>\nThank you"
+                                    }
+                                ]
+                            }
+                        },
+                        "Send_an_email_to_owners": {
+                            "runAfter": {
+                                "Initialize_variable_EmailBodyHTML": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "body": {
+                                    "Body": "<p>@{variables('EmailBodyHTML')}</p>",
+                                    "Subject": "New project workspace: @{triggerBody()?['Title']}",
+                                    "To": "@variables('EmailTo')"
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['office365']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/v2/Mail"
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "office365": {
+                                "connectionId": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/connections/',parameters('OutlookConnectionName'))]",
+                                "connectionName": "[parameters('OutlookConnectionName')]",
+                                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/office365')]"
+                            },
+                            "sharepointonline": {
+                                "connectionId": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/connections/',parameters('SPOConnectionName'))]",
+                                "connectionName": "[parameters('SPOConnectionName')]",
+                                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/sharepointonline')]"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

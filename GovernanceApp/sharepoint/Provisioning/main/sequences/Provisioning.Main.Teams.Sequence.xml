@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2020/02/ProvisioningSchema" Version="0.1" Author="Storm Ltd.">
+    <pnp:Preferences>
+      <pnp:Parameters>
+          <pnp:Parameter Key="Title"/>
+          <pnp:Parameter Key="Description"/>
+          <pnp:Parameter Key="Url" />
+          <pnp:Parameter Key="Owner"/>
+          <pnp:Parameter Key="ServiceAccountLoginName"/>
+          <pnp:Parameter Key="AuthenticationRealm"/>
+      </pnp:Parameters>
+    </pnp:Preferences>
+    <pnp:Templates>
+      <pnp:ProvisioningTemplateFile ID="Provisioning.Main.Teams.Fields" File="..\templates\Provisioning.Main.Teams.Fields.xml" />
+      <pnp:ProvisioningTemplateFile ID="Provisioning.Main.Teams.ContentTypes" File="..\templates\Provisioning.Main.Teams.ContentTypes.xml" />
+      <pnp:ProvisioningTemplateFile ID="Provisioning.Main.Teams.Lists" File="..\templates\Provisioning.Main.Teams.Lists.xml" /> 
+      <pnp:ProvisioningTemplateFile ID="Provisioning.Main.Teams.Pages" File="..\templates\Provisioning.Main.Teams.Pages.xml" />
+      <pnp:ProvisioningTemplateFile ID="Provisioning.Main.Teams.Navigation" File="..\templates\Provisioning.Main.Teams.Navigation.xml" /> 
+      <pnp:ProvisioningTemplateFile ID="Provisioning.Main.Teams.Security" File="..\templates\Provisioning.Main.Teams.Security.xml" />
+    </pnp:Templates>
+  <pnp:Sequence ID="PROVISIONING-TEAMS-MAIN-SITE">
+    <pnp:SiteCollections>
+      <pnp:SiteCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                          xsi:type="pnp:CommunicationSite"  
+                          SiteDesign="Topic"
+                          Title="{parameter:Title}"
+                          Description="{parameter:Description}"
+                          Url="{parameter:Url}"
+                          IsHubSite="false"
+                          Owner="{parameter:Owner}">
+        <pnp:Templates>
+          <pnp:ProvisioningTemplateReference ID="Provisioning.Main.Teams.Fields" />
+          <pnp:ProvisioningTemplateReference ID="Provisioning.Main.Teams.ContentTypes" />
+          <pnp:ProvisioningTemplateReference ID="Provisioning.Main.Teams.Lists" />
+          <pnp:ProvisioningTemplateReference ID="Provisioning.Main.Teams.Pages" />
+          <pnp:ProvisioningTemplateReference ID="Provisioning.Main.Teams.Navigation" />
+          <pnp:ProvisioningTemplateReference ID="Provisioning.Main.Teams.Security" />
+        </pnp:Templates> 
+      </pnp:SiteCollection>
+    </pnp:SiteCollections>
+  </pnp:Sequence>
+</pnp:Provisioning>

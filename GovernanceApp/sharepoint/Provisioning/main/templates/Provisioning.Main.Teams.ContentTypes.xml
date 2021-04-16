@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2020/02/ProvisioningSchema" Version="0.1" Author="Storm Ltd.">
+  <pnp:Templates>
+    <pnp:ProvisioningTemplate ID="Provisioning.Main.Teams.ContentTypes">
+      <pnp:ContentTypes>
+        <pnp:ContentType ID="0x01002E298971BDCE7443BBB9BEE3D5494B6B" Name="Workspace Request" Description="" Group="Governance App" NewFormUrl="" EditFormUrl="" DisplayFormUrl="">
+          <pnp:FieldRefs>
+            <!-- New fields from Ardagh template, using a new provisioning solution -->
+            <pnp:FieldRef ID="fa564e0f-0c70-4ab9-b863-0177e6ddd247" Name="Title" Required="true" UpdateChildren="true" />
+            <pnp:FieldRef ID="48862393-00f0-4fcf-bfb4-f14854bade69" Name="WorkspaceAlias" Required="true" UpdateChildren="true" />
+            <pnp:FieldRef ID="606c46c9-4413-499f-8db7-b128d1751132" Name="WorkspaceDescription" Required="true" UpdateChildren="true" />
+            <pnp:FieldRef ID="09aedcb8-8bc2-4d72-b399-561da6308fd4" Name="TemplateName" Required="true" UpdateChildren="true" />
+            <pnp:FieldRef ID="63f7afc1-92f8-4fdb-95f6-7162f0e67913" Name="Owners"/>
+            <pnp:FieldRef ID="f8953ad8-fd84-4a8b-bba0-f9bf056dc147" Name="Members"/>
+            <pnp:FieldRef ID="fb878f25-ec89-4b01-b6c9-eb9d78515195" Name="BusinessJustification" />
+            <pnp:FieldRef ID="6d7657f9-649e-428d-9df1-751265d463fa" Name="AdditionalFeatures" UpdateChildren="true" />
+            <pnp:FieldRef ID="5047ef26-12f9-46cd-8110-99007ed378e5" Name="EnableSiteScripts" UpdateChildren="true" />
+            <pnp:FieldRef ID="baf7c1ac-47ee-4162-b34a-e586b42675f6" Name="ExternalUsers" UpdateChildren="true" />
+            <pnp:FieldRef ID="1c4a85a0-4ef1-466e-95e0-de21ee110990" Name="Visibility"/>
+            <pnp:FieldRef ID="0aa2541c-9601-43dd-a725-c70e3e04c66d" Name="AdditionalTemplateParameters" UpdateChildren="true" />
+            <pnp:FieldRef ID="a103925f-2646-49d0-ac53-e9ac312d26e1" Name="TeamURL" UpdateChildren="true" />
+            <pnp:FieldRef ID="a32fd64a-9e3f-4ad6-8f8e-b55456d5f7bf" Name="SharePointSiteURL" UpdateChildren="true" />
+            <pnp:FieldRef ID="260f7057-a614-43e5-875e-ce459d7220a7" Name="RequestComments" UpdateChildren="true" />
+            <pnp:FieldRef ID="6c672905-2e02-469a-9cd5-30f54628478f" Name="ApprovedDate" UpdateChildren="true" />
+            <pnp:FieldRef ID="e7a89cb6-a2e9-49f4-a23a-0731aa752bf4" Name="ApprovedRejectedBy" UpdateChildren="true" />
+            <pnp:FieldRef ID="73ca1a39-406a-48c2-ae8c-850451793480" Name="Status" Required="true" UpdateChildren="true" />
+            <pnp:FieldRef ID="77404100-7f20-4609-a1f1-e5d06d4f2303" Name="IsaTemplate" Required="true" UpdateChildren="true" />
+            <pnp:FieldRef ID="e7df5896-f84f-4c20-ae4d-c3dfc0588696" Name="WorkspaceType" Required="true" UpdateChildren="true" />
+
+            <!-- Old fields from Ardagh template -->
+            <!-- Do not remove before check if Governance App solution is using there -->
+            <pnp:FieldRef ID="e4c7a4e8-8187-4ffb-b892-b320a23d603d" Name="TeamPurpose"/>
+            <pnp:FieldRef ID="877a66d6-69dc-43ff-ab7a-40af815fe91a" Name="ConfidentialData"/>
+            <pnp:FieldRef ID="20ad71bf-b579-40b8-a4ec-9f92ea22e443" Name="_TemplateId"/>
+            <pnp:FieldRef ID="0f7271ca-c566-47f9-9c10-c1163f70255d" Name="Stage"/>
+            <pnp:FieldRef ID="5093f25d-7bd3-4d1b-8a1a-6c0774a00e02" Name="StatusReason"/>
+            <pnp:FieldRef ID="9a64a440-3b6b-480c-ba7a-ad0e087054bd" Name="FirstPartyTemplate" />
+          </pnp:FieldRefs>
+        </pnp:ContentType>
+
+        <pnp:ContentType ID="0x01005651395ED4B646BF8606AB8E61DCFF47" Name="Custom Properties" Description="" Group="Governance App" NewFormUrl="" EditFormUrl="" DisplayFormUrl="">
+          <pnp:FieldRefs>
+            <pnp:FieldRef ID="fa564e0f-0c70-4ab9-b863-0177e6ddd247" Name="Title" Required="true" UpdateChildren="true" />
+          </pnp:FieldRefs>
+        </pnp:ContentType>
+      </pnp:ContentTypes>
+    </pnp:ProvisioningTemplate>
+  </pnp:Templates>
+</pnp:Provisioning>

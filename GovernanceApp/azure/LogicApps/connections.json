@@ -1,0 +1,75 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "SPOConnectionName": {
+            "defaultvalue": "",
+            "type": "string"
+        },
+        "OutlookConnectionName": {
+            "defaultvalue": "",
+            "type": "string"
+        },
+        "QueuesConnectionName": {
+            "defaultvalue": "",
+            "type": "string"
+        },
+        "StorageAccountName": {
+            "defaultvalue": "",
+            "type": "string"
+        },
+        "StorageAccountKey": {
+            "defaultvalue": "",
+            "type": "securestring"
+        }
+    },
+    "resources": [
+        {
+            "comments": "Provision the API connections before the logic apps.",
+            "type": "Microsoft.Web/connections",
+            "apiVersion": "2016-06-01",
+            "name": "[parameters('SPOConnectionName')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "displayName": "SharePoint Online connection",
+                "customParameterValues": {
+                },
+                "api": {
+                    "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/sharepointonline')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Web/connections",
+            "apiVersion": "2016-06-01",
+            "name": "[parameters('OutlookConnectionName')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "displayName": "Office 365 Outlook connection",
+                "customParameterValues": {
+                },
+                "api": {
+                    "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/office365')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Web/connections",
+            "apiVersion": "2016-06-01",
+            "name": "[parameters('QueuesConnectionName')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "displayName": "Storage Queues connection",
+                "customParameterValues": {
+                },
+                "api": {
+                    "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/azurequeues')]"
+                },
+                "parameterValues": {
+                    "storageaccount": "[parameters('StorageAccountName')]",
+                    "sharedkey": "[parameters('StorageAccountKey')]"
+                }
+            }
+        }
+    ]
+}

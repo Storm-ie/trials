@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2020/02/ProvisioningSchema" Version="0.1" Author="Storm Ltd.">
+    <pnp:Templates>
+        <pnp:ProvisioningTemplate ID="Provisioning.Main.Teams.Lists">
+            <pnp:Lists>
+                <pnp:ListInstance Title="Provisioning Requests" Description="" DocumentTemplate="" OnQuickLaunch="true" TemplateType="100" Url="Lists/ProvisioningRequests" MinorVersionLimit="0" MaxVersionLimit="0" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" ContentTypesEnabled="true" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/ProvisioningRequests/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/ProvisioningRequests/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/ProvisioningRequests/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+                    <pnp:ContentTypeBindings>
+                        <pnp:ContentTypeBinding ContentTypeID="0x01002E298971BDCE7443BBB9BEE3D5494B6B" Default="true" />
+                        <pnp:ContentTypeBinding ContentTypeID="0x01" Remove="true" />
+                        <pnp:ContentTypeBinding ContentTypeID="0x0120" Remove="true" />
+                    </pnp:ContentTypeBindings>
+                    <pnp:Views>
+                        <View Name="{879A38FA-8BF3-4A45-B91B-6F1F3827FE1D}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="{site}/Lists/ProvisioningRequests/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=47">
+                            <Query>
+                                <OrderBy>
+                                    <FieldRef Name="ID" />
+                                </OrderBy>
+                            </Query>
+                            <ViewFields>
+                                <FieldRef Name="LinkTitle" />
+                                <FieldRef Name="WorkspaceAlias" />
+                                <FieldRef Name="Owners" />
+                                <FieldRef Name="Members" />
+                                <FieldRef Name="Status" />
+                                <FieldRef Name="Created" />
+                            </ViewFields>
+                            <RowLimit Paged="TRUE">30</RowLimit>
+                            <JSLink>clienttemplates.js</JSLink>
+                        </View>
+                    </pnp:Views>
+                    <pnp:Security>
+                        <pnp:BreakRoleInheritance CopyRoleAssignments="false" ClearSubscopes="false">
+                            <pnp:RoleAssignment Principal="{associatedownergroupid}" RoleDefinition="Full Control" />
+                            <pnp:RoleAssignment Principal="{associatedmembergroupid}" RoleDefinition="Edit" />
+                            <pnp:RoleAssignment Principal="{associatedvisitorgroupid}" RoleDefinition="Contribute" />
+                        </pnp:BreakRoleInheritance>
+                    </pnp:Security>
+                </pnp:ListInstance>
+                <pnp:ListInstance Title="Provisioning Custom Properties" Description="" DocumentTemplate="" OnQuickLaunch="true" TemplateType="100" Url="Lists/ProvisioningCustomProperties" MinorVersionLimit="0" MaxVersionLimit="0" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" ContentTypesEnabled="true" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/ProvisioningCustomProperties/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/ProvisioningCustomProperties/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/ProvisioningCustomProperties/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+                    <pnp:ContentTypeBindings>
+                        <pnp:ContentTypeBinding ContentTypeID="0x01005651395ED4B646BF8606AB8E61DCFF47" Default="true" />
+                        <pnp:ContentTypeBinding ContentTypeID="0x01" Remove="true" />
+                        <pnp:ContentTypeBinding ContentTypeID="0x0120" Remove="true" />
+                    </pnp:ContentTypeBindings>
+                    <pnp:Views>
+                        <View Name="{879A38FA-8BF3-4A45-B91B-6F1F3827FE1D}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="{site}/Lists/ProvisioningCustomProperties/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=47">
+                            <Query>
+                                <OrderBy>
+                                    <FieldRef Name="ID" />
+                                </OrderBy>
+                            </Query>
+                            <ViewFields>
+                                <FieldRef Name="LinkTitle" />
+                            </ViewFields>
+                            <RowLimit Paged="TRUE">30</RowLimit>
+                            <JSLink>clienttemplates.js</JSLink>
+                        </View>
+                    </pnp:Views>
+                    <pnp:Security>
+                        <pnp:BreakRoleInheritance CopyRoleAssignments="false" ClearSubscopes="false">
+                            <pnp:RoleAssignment Principal="{associatedownergroupid}" RoleDefinition="Full Control" />
+                            <pnp:RoleAssignment Principal="{associatedmembergroupid}" RoleDefinition="Edit" />
+                            <pnp:RoleAssignment Principal="{associatedvisitorgroupid}" RoleDefinition="Contribute" />
+                        </pnp:BreakRoleInheritance>
+                    </pnp:Security>
+                </pnp:ListInstance>
+                <pnp:ListInstance Title="Provisioning Templates" Description="" DocumentTemplate="{site}/ProvisioningTemplates/Forms/template.dotx" TemplateType="101" Url="ProvisioningTemplates" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="500" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-e717-4e80-aa17-d0c71b360101" EnableAttachments="false" DefaultDisplayFormUrl="{site}/ProvisioningTemplates/Forms/DispForm.aspx" DefaultEditFormUrl="{site}/ProvisioningTemplates/Forms/EditForm.aspx" DefaultNewFormUrl="{site}/ProvisioningTemplates/Forms/Upload.aspx" ImageUrl="/_layouts/15/images/itdl.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+                    <pnp:ContentTypeBindings>
+                        <pnp:ContentTypeBinding ContentTypeID="0x0101" Default="true" />
+                        <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+                    </pnp:ContentTypeBindings>
+                    <pnp:Views>
+                        <View Name="{CDC04E28-5975-46ED-9CF8-8CD3E4F8A094}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Documents" Url="{site}/ProvisioningTemplates/Forms/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/dlicon.png?rev=47">
+                            <Query>
+                                <OrderBy>
+                                    <FieldRef Name="FileLeafRef" />
+                                </OrderBy>
+                            </Query>
+                            <ViewFields>
+                                <FieldRef Name="ID" />
+                                <FieldRef Name="DocIcon" />
+                                <FieldRef Name="LinkFilename" />
+                                <FieldRef Name="Modified" />
+                                <FieldRef Name="Editor" />
+                            </ViewFields>
+                            <RowLimit Paged="TRUE">30</RowLimit>
+                            <JSLink>clienttemplates.js</JSLink>
+                        </View>
+                    </pnp:Views>
+                    <pnp:FieldRefs>
+                        <pnp:FieldRef ID="d307dff3-340f-44a2-9f4b-fbfe1ba07459" Name="_CommentCount" DisplayName="Comment count" />
+                        <pnp:FieldRef ID="db8d9d6d-dc9a-4fbd-85f3-4a753bfdc58c" Name="_LikeCount" DisplayName="Like count" />
+                    </pnp:FieldRefs>
+                </pnp:ListInstance>
+            </pnp:Lists>
+        </pnp:ProvisioningTemplate>
+    </pnp:Templates>
+</pnp:Provisioning>

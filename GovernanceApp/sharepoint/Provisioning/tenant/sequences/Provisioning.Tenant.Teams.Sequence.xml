@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2020/02/ProvisioningSchema" Version="0.1" Author="Storm Ltd.">
+  <pnp:Preferences>
+    <pnp:Parameters>
+        <pnp:Parameter Key="Url" />
+        <pnp:Parameter Key="Title"/>
+        <pnp:Parameter Key="Owner"/>
+        <pnp:Parameter Key="Description"/>
+        <pnp:Parameter Key="ServiceAccountLoginName"/>
+        <pnp:Parameter Key="SPOAllUsersGroup"/>
+    </pnp:Parameters>
+  </pnp:Preferences>
+  <pnp:Templates>      
+    <pnp:ProvisioningTemplateFile ID="Provisioning.Tenant.Teams.Security" File="..\templates\Provisioning.Tenant.Teams.Security.xml" />
+    <pnp:ProvisioningTemplateFile ID="Provisioning.Tenant.Teams.Lists" File="..\templates\Provisioning.Tenant.Teams.Lists.xml" />    
+  </pnp:Templates>  
+  <pnp:Sequence ID="PROVISIONING-TEAMS-TENANT">
+    <pnp:SiteCollections>
+      <pnp:SiteCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                          xsi:type="pnp:TeamSiteNoGroup" 
+                          Url="{parameter:Url}"
+                          Title="{parameter:Title}" 
+                          Description="{parameter:Description}"
+                          Owner="{parameter:Owner}">
+        <pnp:Templates>
+          <pnp:ProvisioningTemplateReference ID="Provisioning.Tenant.Teams.Lists" />
+        </pnp:Templates> 
+      </pnp:SiteCollection>
+    </pnp:SiteCollections>
+  </pnp:Sequence>
+</pnp:Provisioning>

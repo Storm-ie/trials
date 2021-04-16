@@ -1,0 +1,18 @@
+.\azure\deploy-az.ps1 `
+    -TenantName "contoso" `
+    -TenantId "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" `
+    -SubscriptionId "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" `
+    -SPOTenantId "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" `
+    -SPOUsername "admin@contoso.onmicrosoft.com" `
+    -SPOPassword 'admin_password' `
+    -CertificatePassword 'Storm01' `
+    -Environment "prod" `
+    -InstanceNumber "001" `
+    -ApproverEmail "approver@contoso.onmicrosoft.com" `
+    -SiteAlias "GovernanceApp" `
+    -ManagedPath "sites" `
+    -ResourceGroupName "rg-govapp-prod-001" `
+    -Location "northeurope" `
+    -AppName "GovApp" `
+    -SiteTemplatesListUrl "ProvisioningTemplates" `
+    -ProvisioningRequestsListUrl "Lists/ProvisioningRequests"

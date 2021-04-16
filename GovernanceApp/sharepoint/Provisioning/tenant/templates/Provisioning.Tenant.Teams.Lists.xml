@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2020/02/ProvisioningSchema" Version="0.1" Author="Storm Ltd.">
+    <pnp:Preferences Generator="OfficeDevPnP.Core, Version=2.4.1605.0, Culture=neutral, PublicKeyToken=null">
+        <pnp:Parameters>
+            <pnp:Parameter Key="SPOAllUsersGroup"/>
+        </pnp:Parameters>
+    </pnp:Preferences>
+    <pnp:Templates>
+        <pnp:ProvisioningTemplate ID="Provisioning.Tenant.Teams.Lists">
+            <pnp:Lists>
+                <pnp:ListInstance Title="SettingsTeamsRequest" Description="" DocumentTemplate="" TemplateType="100" Url="Lists/SettingsTeamsRequest" MinorVersionLimit="0" MaxVersionLimit="0" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/SettingsTeamsRequest/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/SettingsTeamsRequest/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/SettingsTeamsRequest/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+                    <pnp:ContentTypeBindings>
+                        <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+                        <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+                    </pnp:ContentTypeBindings>
+                    <pnp:Views>
+                        <View Name="{137D0D4A-232B-4E45-B923-825092AC1595}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="{site}/Lists/SettingsTeamsRequest/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=47">
+                            <Query>
+                                <OrderBy>
+                                    <FieldRef Name="ID" />
+                                </OrderBy>
+                            </Query>
+                            <ViewFields>
+                                <FieldRef Name="LinkTitle" />
+                                <FieldRef Name="listId" />
+                                <FieldRef Name="listCustomPropertiesId" />
+                                <FieldRef Name="webUrl" />
+                                <FieldRef Name="groupId" />
+                            </ViewFields>
+                            <RowLimit Paged="TRUE">30</RowLimit>
+                            <JSLink>clienttemplates.js</JSLink>
+                            <CustomFormatter />
+                        </View>
+                    </pnp:Views>
+                    <pnp:Fields>
+                        <Field DisplayName="listId" Format="Dropdown" MaxLength="255" Name="listId" Title="listId" Type="Text" ID="{48894d49-995f-4f9e-a97e-743206b1965d}" SourceID="{{listid:SettingsTeamsRequest}}" StaticName="listId" ColName="nvarchar4" RowOrdinal="0" />
+                        <Field DisplayName="listCustomPropertiesId" Format="Dropdown" MaxLength="255" Name="listCustomPropertiesId" Title="listCustomPropertiesId" Type="Text" ID="{5d1c2ce6-1966-4712-b62c-b60ad2194869}" SourceID="{{listid:SettingsTeamsRequest}}" StaticName="listCustomPropertiesId" ColName="nvarchar4" RowOrdinal="0" />
+                        <Field DisplayName="webUrl" Format="Dropdown" MaxLength="255" Name="webUrl" Title="webUrl" Type="Text" ID="{18c85d83-9f6f-426e-9bb7-d8d433baa672}" SourceID="{{listid:SettingsTeamsRequest}}" StaticName="webUrl" ColName="nvarchar5" RowOrdinal="0" />
+                        <Field DisplayName="groupId" Format="Dropdown" MaxLength="255" Name="groupId" Title="groupId" Type="Text" ID="{a31dc4c1-62a5-4ad0-951a-023e3de3baae}" SourceID="{{listid:SettingsTeamsRequest}}" StaticName="groupId" ColName="nvarchar6" RowOrdinal="0" />
+                    </pnp:Fields>
+                </pnp:ListInstance>
+            </pnp:Lists>
+        </pnp:ProvisioningTemplate>
+    </pnp:Templates>
+</pnp:Provisioning>

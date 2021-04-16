@@ -1,0 +1,241 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "Name": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "SiteUrl": {
+            "defaultvalue": "",
+            "type": "string"
+        },
+        "ListId": {
+            "defaultvalue": "",
+            "type": "string"
+        },
+        "ListViewId": {
+            "defaultvalue": "",
+            "type": "string"
+        },
+        "ApproverEmail": {
+            "defaultvalue": "",
+            "type": "string"
+        },
+        "SPOConnectionName": {
+            "defaultvalue": "",
+            "type": "string"
+        },
+        "OutlookConnectionName": {
+            "defaultvalue": "",
+            "type": "string"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('Name')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "When_an_item_is_created_or_modified": {
+                            "recurrence": {
+                                "frequency": "Minute",
+                                "interval": 3
+                            },
+                            "splitOn": "@triggerBody()?['value']",
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['sharepointonline']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('SiteUrl'), '''))}/tables/@{encodeURIComponent(encodeURIComponent(''', parameters('ListId'), '''))}/onupdateditems')]",
+                                "queries": {
+                                    "view": "[parameters('ListViewId')]"
+                                }
+                            },
+                            "conditions": [
+                                {
+                                    "expression": "@equals(triggerBody()?['Status']?['Value'],'Submitted')"
+                                }
+                            ]
+                        }
+                    },
+                    "actions": {
+                        "Get_item": {
+                            "runAfter": {},
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['sharepointonline']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('SiteUrl'), '''))}/tables/@{encodeURIComponent(encodeURIComponent(''', parameters('ListId'), '''))}/items/@{encodeURIComponent(triggerBody()?[''ID''])}')]",
+                                "queries": {
+                                    "view": "[parameters('ListViewId')]"
+                                }
+                            }
+                        },
+                        "If_request_approved": {
+                            "actions": {
+                                "Update_status_to_Approved": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "Status": {
+                                                "Value": "Approved"
+                                            },
+                                            "Title": "@body('Get_item')['Title']"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['sharepointonline']['connectionId']"
+                                            }
+                                        },
+                                        "method": "patch",
+                                        "path": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('SiteUrl'), '''))}/tables/@{encodeURIComponent(encodeURIComponent(''', parameters('ListId'), '''))}/items/@{encodeURIComponent(body(''Get_item'')?[''ID''])}')]",
+                                        "queries": {
+                                            "view": "[parameters('ListViewId')]"
+                                        }
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Send_approval_email": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "else": {
+                                "actions": {
+                                    "Update_status_to_Rejected": {
+                                        "runAfter": {},
+                                        "type": "ApiConnection",
+                                        "inputs": {
+                                            "body": {
+                                                "Status": {
+                                                    "Value": "Rejected"
+                                                },
+                                                "Title": "@body('Get_item')['Title']"
+                                            },
+                                            "host": {
+                                                "connection": {
+                                                    "name": "@parameters('$connections')['sharepointonline']['connectionId']"
+                                                }
+                                            },
+                                            "method": "patch",
+                                            "path": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('SiteUrl'), '''))}/tables/@{encodeURIComponent(encodeURIComponent(''', parameters('ListId'), '''))}/items/@{encodeURIComponent(body(''Get_item'')?[''ID''])}')]",
+                                            "queries": {
+                                                "view": "[parameters('ListViewId')]"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "expression": {
+                                "and": [
+                                    {
+                                        "equals": [
+                                            "@body('Send_approval_email')?['SelectedOption']",
+                                            "Approve"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "type": "If"
+                        },
+                        "Send_approval_email": {
+                            "runAfter": {
+                                "Update_status_to_Pending_Approval": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ApiConnectionWebhook",
+                            "inputs": {
+                                "body": {
+                                    "Message": {
+                                        "Body": "The following request for a new project workspace requires approval:\n<br/>\n<br/>\nTitle: @{body('Get_item')['Title']}\n<br/>\nDescription: @{body('Get_item')?['WorkspaceDescription']}\n<br/>\nAlias: @{body('Get_item')?['WorkspaceAlias']}\n<br/>",
+                                        "HideHTMLMessage": false,
+                                        "Importance": "Normal",
+                                        "Options": "Approve, Reject",
+                                        "ShowHTMLConfirmationDialog": true,
+                                        "Subject": "Approval Request - @{body('Get_item')['Title']}",
+                                        "To": "[parameters('ApproverEmail')]",
+                                        "UseOnlyHTMLMessage": true
+                                    },
+                                    "NotificationUrl": "@{listCallbackUrl()}"
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['office365']['connectionId']"
+                                    }
+                                },
+                                "path": "/approvalmail/$subscriptions"
+                            }
+                        },
+                        "Update_status_to_Pending_Approval": {
+                            "runAfter": {
+                                "Get_item": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "body": {
+                                    "Status": {
+                                        "Value": "Pending Approval"
+                                    },
+                                    "Title": "@body('Get_item')['Title']"
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['sharepointonline']['connectionId']"
+                                    }
+                                },
+                                "method": "patch",
+                                "path": "[concat('/datasets/@{encodeURIComponent(encodeURIComponent(''', parameters('SiteUrl'), '''))}/tables/@{encodeURIComponent(encodeURIComponent(''', parameters('ListId'), '''))}/items/@{encodeURIComponent(body(''Get_item'')?[''ID''])}')]",
+                                "queries": {
+                                    "view": "[parameters('ListViewId')]"
+                                }
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "office365": {
+                                "connectionId": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/connections/',parameters('OutlookConnectionName'))]",
+                                "connectionName": "[parameters('OutlookConnectionName')]",
+                                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/office365')]"
+                            },
+                            "sharepointonline": {
+                                "connectionId": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Web/connections/',parameters('SPOConnectionName'))]",
+                                "connectionName": "[parameters('SPOConnectionName')]",
+                                "id": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Web/locations/', resourceGroup().location, '/managedApis/sharepointonline')]"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
