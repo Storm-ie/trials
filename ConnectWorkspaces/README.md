@@ -5,13 +5,13 @@
 <br/>
 <br/>
 
-# Storm's Microsoft 365 Governance App
+# Storm's Microsoft 365 Connect Workspaces App
 
 <br/>
 
 ## Introduction
 
-This repository contains all the deployment resources required for the Storm's Governance app:
+This repository contains all the deployment resources required for the Storm's Connect Workspaces app:
 
 - Deployment script for deploying via PowerShell:
   - Azure AD app
